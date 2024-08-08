@@ -5,3 +5,6 @@ bin/**
 # ./obj/
 obj/**
 !obj/.hold
+
+# .vscode
+.vscode
