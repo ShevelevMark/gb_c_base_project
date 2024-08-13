@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-int main() {
+int validate_string_test(void) {
     // TEST 1
     {
         char const *str = "";
@@ -115,6 +115,10 @@ int main() {
         printf("TEST 14 {input:%s|%s}\n", str, actual == expected ? "OK" : "FAIL");
     }
      
+    return 0;
+}
 
+int main() {
+    validate_string_test();
     return 0;
 }
