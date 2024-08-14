@@ -20,6 +20,8 @@ help:
 	@echo Run make with one of the two options:
 	@echo debug: $(DEBUG_FLAGS)
 	@echo release: $(RELEASE_FLAGS)
+	@echo clean: to remove all files in ./bin and ./obj on Linux
+	@echo wclean: to remove all files in ./bin and ./obj on Windows
 
 debug: CFLAGS += $(DEBUG_FLAGS)
 release: CFLAGS += $(RELEASE_FLAGS)
