@@ -17,9 +17,9 @@ INC := -I $(INC_DIR)
 .PHONY: clean debug release build help
 
 help:
-	@echo "Run make with one of the two options:"
-	@echo "debug: $(DEBUG_FLAGS)"
-	@echo "release: $(RELEASE_FLAGS)"
+	@echo Run make with one of the two options:
+	@echo debug: $(DEBUG_FLAGS)
+	@echo release: $(RELEASE_FLAGS)
 
 debug: CFLAGS += $(DEBUG_FLAGS)
 release: CFLAGS += $(RELEASE_FLAGS)
