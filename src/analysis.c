@@ -1,5 +1,6 @@
 #include <analysis.h>
 #include <read.h>
+#include <date.h>
 #include <stdio.h>
 #include <limits.h>
 
@@ -52,6 +53,7 @@ YearStatistics_t analysis(FILE *fd) {
         if (i.month != curr_month) {
             if (0 != month_cnt) {
                 ys.month[curr_month - 1].avg /= month_cnt;
+                ys.month[curr_month - 1].unavlbl_cnt = minutes_in_month(ys.year, curr_month) - month_cnt; 
                 ys.month[curr_month - 1].no_data = false;
             }
             curr_month = i.month;
@@ -70,11 +72,13 @@ YearStatistics_t analysis(FILE *fd) {
 
     if (0 != month_cnt) {
         ys.month[curr_month - 1].avg /= month_cnt;
+        ys.month[curr_month - 1].unavlbl_cnt = minutes_in_month(ys.year, curr_month) - month_cnt;
         ys.month[curr_month - 1].no_data = false;
     }
 
     if (0 != year_cnt) {
         ys.avg /= year_cnt;
+        ys.unavlbl_ctn = (is_leap(ys.year) ? 366 : 365) * 24 * 60 - year_cnt;
     }
 
     return ys;
