@@ -1,4 +1,5 @@
 #include <read.h>
+#include <date.h>
 #include <ctype.h>
 
 /**
@@ -46,7 +47,7 @@ bool validate_string(char const *str) {
  * @param char const * str - указательна на начало строки, содержаещей необходимые данные.
  * @param int * year        - год в пределах от 1900 до 3000
  * @param int * month       - номер месяца от 1 до 12
- * @param int * day         - номер дня в пределах от 1 до 31
+ * @param int * day         - номер дня в пределах от 1 до 31 (с учётом високосного дня по григоринаскому календарю)
  * @param int * hour        - номер часа от 0 до 23
  * @param int * minute      - номер минуты от 0 до 59
  * @param int * temperature - зафиксированная температура от -99 до 99
@@ -59,7 +60,7 @@ bool validate_data(char const *str, int *year, int *month, int *day, int *hour, 
     if (6 != sscanf(str, "%d;%d;%d;%d;%d;%d", year, month, day, hour, minute, temperature)) return false;
     if (1900 > *year || 3000 < *year ) return false;
     if (1 > *month || 12 < *month) return false;
-    if (1 > *day || 31 < *day) return false;
+    if (1 > *day || days_in_month(*year, *month) < *day) return false;
     if (0 > *hour || 23 < *hour) return false;
     if (0 > *minute || 59 < *minute) return false;
     if (-99 > *temperature || 99 < *temperature) return false;
