@@ -27,22 +27,14 @@ YearStatistics_t analysis(FILE *fd) {
     while (read_line(fd, buf)) {
 #ifdef _DEBUG
         ++line_cnt;
-        fprintf(stderr, "DEBUG: line %6u; buf = {%s} ", line_cnt, buf);
 #endif
         if (!validate_string(buf) || !validate_data(buf, &i.year, &i.month, &i.day, &i.hour, &i.minute, &i.temperature)) {
 #ifdef _DEBUG
-            if (!validate_string(buf)) {
-                fprintf(stderr,"validate string FAIL!\n");
-            } else if (!validate_data(buf, &i.year, &i.month, &i.day, &i.hour, &i.minute, &i.temperature)) {
-                fprintf(stderr,"validate data FAIL!\n");
-            }
+           fprintf(stderr, "DEBUG: error at line %u buf = {%s}\n", line_cnt, buf); 
 #endif
             ++ys.month[curr_month - 1].err_cnt, ++ys.err_cnt;
             continue;
         }
-#ifdef _DEBUG
-        fprintf(stderr,"good data: %4d %2d %2d %2d %2d %3d\n", i.year, i.month, i.day, i.hour, i.minute, i.temperature);
-#endif
 
         if (ys.no_data) ys.year = i.year, ys.no_data = false;
 
