@@ -10,6 +10,17 @@
 static inline int max_analysis(int a, int b) { return a > b ? a : b; }
 static inline int min_analysis(int a, int b) { return a < b ? a : b; }
 
+/**
+ * Функция статистического анализа данных из потока.
+ * Читает данные, пропуская некорректные, вычисляет максимальную, минимальную и среднюю температуры для 
+ * каждого месяца и для всего года в целом. 
+ * Среднее вычисляется прямой суммой прочитанных температур и делением на количество успешных измерений,
+ * без интерполяции.
+ * 
+ * @param {FILE *} fd - указатель на поток символных данных
+ * 
+ * @return {YearStatistics_t} - статистика за год
+ */
 YearStatistics_t analysis(FILE *fd) {
     typedef struct { int year, month, day, hour, minute, temperature; } instant_t;
     
