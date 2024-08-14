@@ -1,3 +1,6 @@
+#ifndef READ_H
+#define READ_H
+
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -45,3 +48,5 @@ bool validate_data(char const *str, int *year, int *month, int *day, int *hour, 
  *                функция вернёт false, иначе - true  
  */
 bool read_line(FILE *fd, char *buffer);
+
+#endif

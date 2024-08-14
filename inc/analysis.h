@@ -1,3 +1,6 @@
+#ifndef ANALYSIS_H
+#define ANALYSIS_H
+
 #include <stdbool.h>
 #include <stdio.h>
 
@@ -37,3 +40,5 @@ typedef struct YearStatisticsStruct YearStatistics_t;
  * @return {YearStatistics_t} - статистика за год
  */
 YearStatistics_t analysis(FILE *fd);
+
+#endif

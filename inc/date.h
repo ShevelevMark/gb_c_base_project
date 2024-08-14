@@ -1,6 +1,6 @@
-/**
- * Функции для работы с датой: год / месяц
- **/
+#ifndef DATE_H
+#define DATE_H
+
 #include <stdbool.h>
 
 /**
@@ -33,3 +33,5 @@ int days_in_month(int year, int month);
  * @return {int} - количество минут в месяце или 0 в случае ошибки 
  */
 int minutes_in_month(int year, int month);
+
+#endif
