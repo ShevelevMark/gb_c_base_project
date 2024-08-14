@@ -14,7 +14,7 @@ SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 INC := -I $(INC_DIR)
 
-.PHONY: clean debug release build help
+.PHONY: clean wclean debug release build help
 
 help:
 	@echo Run make with one of the two options:
@@ -34,5 +34,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(INC) -c $^ -o $@ $(CFLAGS)
 
 clean:
-	rm -rf ./bin/*
-	rm -rf ./obj/*
+	@rm -rf ./bin/*
+	@rm -rf ./obj/*
+
+wclean:
+	@del "./bin" /s /q
+	@del "./obj" /s /q
