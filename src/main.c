@@ -14,12 +14,6 @@ static void print_help(void) {
 }
 
 int main(int argc, char **argv) {
-#ifdef _DEBUG
-    printf("DEBUG BUILD!\n"); 
-#else
-    printf("RELEASE BUILD!\n");
-#endif
-
     char *filename = NULL;
     FILE *stream = NULL;
     int month_num = 0;
