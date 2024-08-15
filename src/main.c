@@ -82,15 +82,27 @@ int main(int argc, char **argv) {
         }
 
         YearStatistics_t ys = analysis(stream);
+        fclose(stream);
+        stream = NULL;
+
         if (ys.no_data) {
             printf("No data in a file {%s}\nApplication terminated\n", filename);
             goto END;
         }
+
+        bool write_success = false;
+        if (month_opt_set) {
+            write_success = 
+                write_head(stdout)
+                && 
+                write_month(stdout, ys.year, month_num, ys.month[month_num - 1])
+                &&
+                write_year(stdout, ys);
+        } else {
+            write_success = write_all(stdout, ys);
+        }
 #ifdef _DEBUG
-        bool write_success = write_all(stdout, ys);
         fprintf(stderr, "FORMAT WRITE %s\n", write_success ? "SUCCESS" : "FAIL");
-#else
-        write_all(stdout, ys);
 #endif
     }
 
