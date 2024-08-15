@@ -82,11 +82,15 @@ int main(int argc, char **argv) {
         }
 
         YearStatistics_t ys = analysis(stream);
+        if (ys.no_data) {
+            printf("No data in a file {%s}\nApplication terminated\n", filename);
+            goto END;
+        }
 #ifdef _DEBUG
-        bool write_success = write_year(stdout, ys);
+        bool write_success = write_all(stdout, ys);
         fprintf(stderr, "FORMAT WRITE %s\n", write_success ? "SUCCESS" : "FAIL");
 #else
-        write_year(stdout, ys);
+        write_all(stdout, ys);
 #endif
     }
 

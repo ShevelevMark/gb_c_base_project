@@ -33,7 +33,7 @@ bool write_all(FILE *fd, YearStatistics_t ys) {
         if (!write_month(fd, ys.year, m + 1, ys.month[m])) return false;
 
     /* Статистика за весь год */
-    if (!write_year(fd, YearStatistics_t ys)) return false;
+    if (!write_year(fd, ys)) return false;
 
     return true;
 }
