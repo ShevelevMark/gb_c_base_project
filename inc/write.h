@@ -8,11 +8,21 @@
 /**
  * 
  */
+bool write_head(FILE *fd);
+
+/**
+ * 
+ */
 bool write_month(FILE *fd, int year, int month, MonthStatistics_t ms);
 
 /**
  * 
  */
 bool write_year(FILE *fd, YearStatistics_t ys); 
+
+/**
+ * 
+ */
+bool write_all(FILE *fd, YearStatistics_t ys);
 
 #endif
