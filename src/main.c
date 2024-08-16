@@ -6,7 +6,10 @@
 #include <stdbool.h>
 #include <unistd.h>
 
-static void print_help(void) {
+/**
+ * Функция для печати короткой справки по ключам.
+ */
+static inline void print_help(void) {
     printf("Statistic application expects command line options:\n");
     printf("    -h prints help message\n");
     printf("    -f <filename> required (only once), name of a file to read data from\n");
@@ -14,17 +17,26 @@ static void print_help(void) {
 }
 
 int main(int argc, char **argv) {
+    /**
+     * Переменные для основных данных.
+     * Объявлены заранее, чтобы не перескочить оператором goto через определения.
+     */
     char *filename = NULL;
     FILE *stream = NULL;
     int month_num = 0;
     bool help_opt_set = false, filename_opt_set = false, month_opt_set = false;
+
+    /**
+     * В блоке ниже при ошибочных данных (два одинаковых флага) управление переходит в блок 
+     * с отметкой END, где при необходимости происходит освобождение памяти под строку filename
+     */
     { 
         int opt_code = -1;
         while (-1 != (opt_code = getopt(argc, argv, "hf:m:"))) {
             switch(opt_code) {
                 case 'h':
                     help_opt_set = true;
-                    goto END; 
+                    goto END; /* как только встречен флаг -h мы сразу переходим в конец программы вне зависимости от других флагов */
                 case 'f':
                     if (filename_opt_set) {
                         printf("-f option can not be set multiple times\nApplication terminated\n");
@@ -59,6 +71,9 @@ int main(int argc, char **argv) {
                     month_opt_set = true;
                     break;
             }
+            /**
+             * Все неизвестные флаги игнорируются, ошибки записывает сама функция getopt в поток stderr
+             */
         }
     }
 
@@ -68,7 +83,13 @@ int main(int argc, char **argv) {
         goto END;
     }
 
+    /**
+     * В этом блоке мы так же при каждой ошибке уходим в блок с меткой END.
+     */
     {
+        /**
+         * Здесь мы пытаемся открыть поток для чтения данных
+         */
         stream = fopen(filename, "r");
         if (NULL == stream) {
             printf("Can't open file {%s}\nApplication terminated\n", filename);
@@ -78,6 +99,10 @@ int main(int argc, char **argv) {
         YearStatistics_t ys = analysis(stream);
         fclose(stream);
         stream = NULL;
+        /**
+         * После чтения сразу закрываем и выставляем указатель в NULL,
+         * чтобы он не остался "висячим".
+         */
 
         if (ys.no_data) {
             printf("No data in a file {%s}\nApplication terminated\n", filename);
@@ -102,7 +127,6 @@ int main(int argc, char **argv) {
 
 END: {
     if (NULL != filename) free(filename);
-    if (NULL != stream) fclose(stream);
     if (help_opt_set) print_help();
 }
     return 0;
