@@ -8,6 +8,10 @@
 #include <stdio.h>
 #endif
 
+/**
+ * Дополнительные встраиваемые функции, видимые только в этом файле исходного кода
+ * для удобного использования в подсчёте статистики.
+ */
 static inline int max_analysis(int a, int b) { return a > b ? a : b; }
 static inline int min_analysis(int a, int b) { return a < b ? a : b; }
 
